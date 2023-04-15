@@ -123,8 +123,6 @@ public class GUI extends JFrame {
             if(e.getSource() == myPhoto || e.getSource() == myHobby) {
                 if(image != null) {
                     imageLabel.setIcon(image);
-                    expectativesText.setText("creo que va ser un gran curso");
-
                 }
             }
         }
