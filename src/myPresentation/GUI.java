@@ -3,10 +3,7 @@ package myPresentation;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class GUI extends JFrame {
     //atributos
@@ -57,9 +54,9 @@ public class GUI extends JFrame {
         containerButtons.add(myHobby); // Agregar el botón "This is my passion" al panel de botones
         containerButtons.add(myExpectations); // Agregar el botón "I expect to get the best of you" al panel de botones
 
-        myPhoto.addActionListener(listener); // Agregar el escucha de eventos de acción al botón "This is me"
-        myHobby.addActionListener(listener); // Agregar el escucha de eventos de acción al botón "This is my passion"
-        myExpectations.addActionListener(listener); // Agregar el escucha de eventos de acción al botón "I expect to get the best of you"
+        myPhoto.addMouseListener(listener); // Agregar el escucha de eventos de acción al botón "This is me"
+        myHobby.addMouseListener(listener); // Agregar el escucha de eventos de acción al botón "This is my passion"
+        myExpectations.addMouseListener(listener); // Agregar el escucha de eventos de acción al botón "I expect to get the best of you"
 
         this.add(title, BorderLayout.NORTH); // Agregar el título en la parte superior de la ventana
         this.add(containerButtons, BorderLayout.SOUTH); // Agregar el panel de botones en la parte inferior de la ventana
@@ -75,61 +72,131 @@ public class GUI extends JFrame {
         });
     }
 
-    private class Listener implements ActionListener, MouseListener {
+    private class Listener extends MouseAdapter implements  KeyListener {
+
         private ImageIcon image;
+
+        /**
+         * @param e the event to be processed
+         */
         @Override
-        public void actionPerformed(ActionEvent e) {
-            //JOptionPane.showMessageDialog(null, "Press button");
-            imageLabel.setIcon(null);
-            containerImage.remove(expectativesText);
-            if(e.getSource() == myPhoto){
+        public void mouseClicked(MouseEvent e) {
+            if(e.getSource()==myPhoto){
                 this.image = new ImageIcon(getClass().getResource("/resources/yo.jpg"));
                 Image scaledImage = image.getImage().getScaledInstance(270, 250, Image.SCALE_SMOOTH);
                 image = new ImageIcon(scaledImage);
                 imageLabel.setIcon(image);
-                myPhoto.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar el mouse sobre el botón
-            } else if(e.getSource() == myHobby){
+                myPhoto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            }
+
+            else if(e.getSource() == myHobby){
+
+                if(e.getClickCount()==2){
                 this.image = new ImageIcon(getClass().getResource("/resources/hobies.png"));
                 Image scaledImage = image.getImage().getScaledInstance(270, 250, Image.SCALE_SMOOTH);
                 image = new ImageIcon(scaledImage);
-                imageLabel.setIcon(image);
-                myHobby.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar el mouse sobre el botón
-            } else if(e.getSource() == myExpectations) {
-                expectativesText.setText("creo que va ser un gran curso");
-                expectativesText.setBackground(null);
-                expectativesText.setForeground(Color.BLACK);
-                containerImage.add(expectativesText);
+                imageLabel.setIcon(image);}
             }
+
             revalidate();
             repaint();
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
 
         }
 
+        /**
+         * @param e the event to be processed
+         */
         @Override
         public void mousePressed(MouseEvent e) {
 
         }
 
+        /**
+         * @param e the event to be processed
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
 
         }
 
+        /**
+         * @param e the event to be processed
+         */
+        @Override
         public void mouseEntered(MouseEvent e) {
-            if(e.getSource() == myPhoto || e.getSource() == myHobby) {
-                if(image != null) {
-                    imageLabel.setIcon(image);
-                }
-            }
+
         }
 
+        /**
+         * @param e the event to be processed
+         */
+        @Override
         public void mouseExited(MouseEvent e) {
-            if(e.getSource() == myPhoto || e.getSource() == myHobby) {
-                imageLabel.setIcon(null);
-            }
+
         }
-}}
+
+        /**
+         * @param e the event to be processed
+         */
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        /**
+         * @param e the event to be processed
+         */
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+            containerImage.removeAll();
+
+            if(e.getSource()==myPhoto){
+                if(e.VK_M==e.getKeyCode()){
+                    expectativesText.setText("creo que va ser un gran curso");
+                    expectativesText.setBackground(null);
+                    expectativesText.setForeground(Color.BLACK);
+                    containerImage.add(expectativesText);
+                }
+                revalidate();
+                repaint();
+
+            }
+
+            else if(e.getSource()==myHobby){
+                if(e.VK_M==e.getKeyCode()){
+                    expectativesText.setText("creo que va ser un gran curso");
+                    expectativesText.setBackground(null);
+                    expectativesText.setForeground(Color.BLACK);
+                    containerImage.add(expectativesText);
+                }
+                revalidate();
+                repaint();
+
+            }else{
+                if(e.VK_M==e.getKeyCode()){
+
+                    expectativesText.setText("creo que va ser un gran curso");
+                    expectativesText.setBackground(null);
+                    expectativesText.setForeground(Color.BLACK);
+                    containerImage.add(expectativesText);
+
+                }
+                revalidate();
+                repaint();
+            }
+
+
+        }
+
+        /**
+         * @param e the event to be processed
+         */
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
+
+
+    }}
